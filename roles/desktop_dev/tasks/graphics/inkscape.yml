@@ -1,0 +1,7 @@
+# inkscape - required to modify svg files with imagemagick
+- name: Software | Install inkscape package
+  ansible.builtin.package:
+    name:
+      - inkscape
+    state: present
+  when: inkscape is defined and inkscape == true

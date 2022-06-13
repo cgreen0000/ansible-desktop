@@ -1,0 +1,32 @@
+- name: Dependencies | Flatpak | Install flatpak package
+  ansible.builtin.package:
+    name:
+      - flatpak
+    state: present
+  notify:
+    - Reboot system
+  
+- name: Dependencies | Flatpak | Flush handlers to trigger reboot after installing flatpak
+  meta: flush_handlers
+
+- name: Dependencies | Flatpak | Add the flathub flatpak repository
+  community.general.flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
+    method: system
+    
+- name: Dependencies | Flatpak | Remove filters from flathub repository
+  ansible.builtin.lineinfile:
+    dest: /var/lib/flatpak/repo/config
+    state: absent
+    regexp: "^xa.filter"
+
+- name: Dependencies | Flatpak | Set override permission to user themes
+  ansible.builtin.command:
+    cmd: "flatpak override --filesystem=/home/{{ user.name }}/.themes"
+  changed_when: false
+  loop: "{{ users }}"
+  loop_control:
+    loop_var: user
+

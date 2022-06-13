@@ -1,0 +1,6 @@
+- name: Software | Install krita package
+  ansible.builtin.package:
+    name:
+      - krita
+    state: present
+  when: krita is defined and krita == true

@@ -1,0 +1,29 @@
+- name: System Setup | DE | Gnome | Set button-layout
+  become_user: "{{ user.name }}"
+  community.general.dconf:
+    key: /org/gnome/desktop/wm/preferences/button-layout
+    value: "'menu:minimize,maximize,close'"
+    state: present
+  loop: "{{ users }}"
+  loop_control:
+    loop_var: user
+
+- name: System Setup | DE | Gnome | Set clock-format
+  become_user: "{{ user.name }}"
+  community.general.dconf:
+    key: /org/gnome/desktop/interface/clock-format
+    value: "'12h'"
+    state: present
+  loop: "{{ users }}"
+  loop_control:
+    loop_var: user
+
+- name: System Setup | DE | Gnome | Set clock-show-weekday
+  become_user: "{{ user.name }}"
+  community.general.dconf:
+    key: /org/gnome/desktop/interface/clock-show-weekday
+    value: "true"
+    state: present
+  loop: "{{ users }}"
+  loop_control:
+    loop_var: user

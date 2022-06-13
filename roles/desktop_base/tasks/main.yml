@@ -1,0 +1,48 @@
+# desktop_base | Dependencies
+- include_tasks: dependencies/dependencies_general.yml
+  when: dependencies_general is defined and dependencies_general == true
+
+- include_tasks: dependencies/dependencies_ssh.yml
+
+- include_tasks: dependencies/dependencies_qemu.yml
+  when: ansible_system_vendor == "QEMU"
+
+- include_tasks: dependencies/dependencies_archlinux.yml
+  when: ansible_distribution == "Archlinux"
+
+- include_tasks: dependencies/dependencies_appimage.yml
+  when: dependencies_appimage is defined and dependencies_appimage == true
+  
+- include_tasks: dependencies/dependencies_flatpak.yml
+  when: dependencies_flatpak is defined and dependencies_flatpak == true
+
+- include_tasks: dependencies/dependencies_snap.yml
+  when: dependencies_snap is defined and dependencies_snap == true
+
+# desktop_base | configuration
+- include_tasks: config/font_meslolgs_nf.yml
+- include_tasks: config/lang_japanese_input.yml
+  when: lang_japanese is defined and lang_japanese == true
+
+# desktop_base | apps
+- include_tasks: apps/anki_flatpak.yml
+- include_tasks: apps/anki_tarball.yml
+- include_tasks: apps/base_packages.yml
+- include_tasks: apps/calibre_flatpak.yml
+- include_tasks: apps/chromium_flatpak.yml
+- include_tasks: apps/clamtk_flatpak.yml
+- include_tasks: apps/dconfeditor.yml
+- include_tasks: apps/discord_flatpak.yml
+- include_tasks: apps/etcher_appimage.yml
+  when: etcher_appimage is defined and etcher_appimage == true
+- include_tasks: apps/firefox_flatpak.yml
+- include_tasks: apps/flameshot_flatpak.yml
+- include_tasks: apps/flatseal_flatpak.yml
+- include_tasks: apps/joplin_flatpak.yml
+- include_tasks: apps/libreoffice.yml
+- include_tasks: apps/menulibre_flatpak.yml
+- include_tasks: apps/nextcloudclient_flatpak.yml
+- include_tasks: apps/syncthinggtk_flatpak.yml
+- include_tasks: apps/zsh.yml
+  when: zsh is defined and zsh == true
+

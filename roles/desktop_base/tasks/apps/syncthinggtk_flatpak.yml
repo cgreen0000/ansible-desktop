@@ -1,0 +1,6 @@
+- name: Software | Install Syncthing GTK flatpak
+  community.general.flatpak:
+    name:
+      - me.kozec.syncthingtk
+    state: present
+  when: syncthinggtk_flatpak is defined and syncthinggtk_flatpak == true

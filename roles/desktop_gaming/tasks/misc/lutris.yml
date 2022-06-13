@@ -1,0 +1,19 @@
+- name: Software | Install Lutris
+  block:
+  - name: Software | Lutris | Add repository
+    ansible.builtin.apt_repository:
+      repo: 'ppa:lutris-team/lutris'
+      state: present
+      update_cache: yes
+    when: ansible_distribution == "Ubuntu"
+
+  - name: Flush handlers to trigger apt cache update
+    meta: flush_handlers
+    
+  - name: Software | Lutris | install lutris package
+    ansible.builtin.package:
+      name:
+        - lutris
+      state: present
+      
+  when: lutris is defined and lutris == true

@@ -1,0 +1,6 @@
+- name: Software | Install Minigalaxy flatpak
+  community.general.flatpak:
+    name:
+      - io.github.sharkwouter.Minigalaxy
+    state: present
+  when: minigalaxy_flatpak is defined and minigalaxy_flatpak == true

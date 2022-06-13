@@ -1,0 +1,108 @@
+# System configuration | ssh
+ssh_users: "ansibleadmin chris"
+ssh_template_file: sshd_config_archlinux.j2
+
+# System configuration | Dependencies
+dependencies_general: true
+dependencies_appimage: false
+dependencies_flatpak: true
+dependencies_snap: true
+dependencies_homebrew: false
+
+# System configuration | fonts
+font_meslolgs_nf: false
+
+# System Configuration | Languages and localization
+lang_japanese: true
+
+# System configuration | themes and visuals
+theme_icon_candy_icons: true
+theme_icon_numix_circle: true
+theme_icon_papirus: true
+theme_shell_nordic_darker: true
+theme_shell_sweet: true
+theme_copy_archives: false
+
+# Favorite apps
+firefox_flatpak: true
+libreoffice: true
+alacritty: false
+terminator: false
+
+# System Configuration | shell | zsh
+zsh: false
+
+# Desktop Environment
+desktop_environment: "gnome"
+de_gnome_blurmyshell: true
+de_gnome_dashtodock: true
+de_gnome_extensions: true
+de_gnome_favorite_apps: true
+de_gnome_set_themes: true
+de_gnome_wallpaper_download: true
+de_gnome_wallpaper_set: true
+
+# Desktop Environment | gnome | software installation
+gnomeextensions: true
+gnomeextensions_flatpak: false
+
+# General Software
+alacarte: false
+anki_flatpak: true
+anki_tarball: false
+base_packages: false
+bottles_flatpak: false
+calibre_flatpak: false
+chromium_flatpak: false
+clamtk_flatpak: false
+dconfeditor: true
+discord_flatpak: false
+dropbox: false
+etcher_appimage: false
+ffmpeg: false
+flatseal_flatpak: false
+gimp_flatpak: false
+org.bluesabre.MenuLibre: false
+nextcloudclient_flatpak: false
+syncthinggtk_flatpak: true
+vlc_flatpak: false
+winehq_apt_ubuntu2110: false
+
+# Software | Productivity
+ao_snap: false
+flameshot_flatpak: false
+joplin_flatpak: true
+tusk_snap: false
+
+# Remove unwanted software
+remove_firefox_snap: false
+
+# Software | Development
+git: false
+godotmono: true
+imagemagick: false
+inkscape: false
+krita: false
+monosdk: true
+powershell_snap: true
+renpy: true
+twine_flatpak: false
+twine_tarball: false
+unityhub_flatpak: false
+vscode: true
+vscode_flatpak: false
+
+# Development Software - hashicorp_software.yml
+packer: true
+terraform: true
+
+# Gaming software
+duckstation_flatpak: true
+heroicgameslauncher_flatpak: true
+lutris: true
+minigalaxy_flatpak: false
+pcsx2_flatpak: false
+protonupqt_flatpak: false
+retroarch_flatpak: true
+steam: true
+steamrommanager_appimage: false

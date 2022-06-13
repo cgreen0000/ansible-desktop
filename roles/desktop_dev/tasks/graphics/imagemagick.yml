@@ -1,0 +1,7 @@
+# imagemagick is required to modify image files for application shortcuts
+- name: Install imagemagick package
+  ansible.builtin.package:
+    name:
+      - imagemagick
+    state: present
+  when: imagemagick is defined and imagemagick == true

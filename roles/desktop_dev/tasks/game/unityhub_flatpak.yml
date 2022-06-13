@@ -1,0 +1,6 @@
+- name: Software | Install Unity Hub flatpak
+  community.general.flatpak:
+    name:
+      - com.unity.UnityHub
+    state: present
+  when: unityhub_flatpak is defined and unityhub_flatpak == true

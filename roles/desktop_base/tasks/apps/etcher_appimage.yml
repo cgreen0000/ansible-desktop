@@ -1,0 +1,28 @@
+- name: Setup Etcher AppImage
+  block:
+    - name: Get latest Etcher release
+      community.general.github_release:
+        user: "{{ github_user }}"
+        repo: "{{ github_repo }}"
+        action: latest_release
+      register: release
+
+    - name: Print latest release
+      ansible.builtin.debug:
+        var: release
+
+# Etcher tags their release with v#.#.# but uses #.#.# for the file version. Need to remove the v.
+    - name: Download Etcher {{ release['tag'] }}
+      become_user: "{{ user.name }}"
+      ansible.builtin.get_url:
+        url: "https://github.com/{{ github_user }}/{{ github_repo }}/releases/download/{{ release['tag'] }}/balenaEtcher-{{ release['tag'] | regex_replace('v','') }}-x64.AppImage"
+        dest: "/home/{{ user.name }}/Applications/balenaEtcher-{{ release['tag'] | regex_replace('v','') }}-x64.AppImage"
+        owner: "{{ user.name }}"
+        group: "{{ user.name }}"
+      loop: "{{ users }}"
+      loop_control:
+        loop_var: user
+
+  vars:
+    github_user: balena-io
+    github_repo: etcher

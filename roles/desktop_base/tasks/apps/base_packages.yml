@@ -1,0 +1,32 @@
+# chrome-gnome-shell - allows you to install Gnome extensions from the browser
+# gnome-tweaks - used to configure things such as themes
+# ncdu is a command line utility similar to windirstat in Windows.
+# python3-gpg is required to verify signatures after dropbox install.
+# python3-pip - for installing Python packages
+# ranger is a console file manager.
+# stacer is a system resource monitor and manager
+- name: Software | Install base packages
+  ansible.builtin.package:
+    name:
+      - chrome-gnome-shell
+      - curl
+      - dconf-editor
+      - gnome-tweaks
+      - htop
+      - ncdu
+      - neofetch
+      - python3-gpg
+      - ranger
+      - stacer
+      - tuxguitar
+      - unzip
+      - virt-viewer
+    state: present
+  when: base_packages is defined and base_packages == true
+
+# needs fixed - package names not the same in Arch Linux
+# chrome-gnome-shell
+# python3-gpg
+# stacer
+# tuxguitar
+

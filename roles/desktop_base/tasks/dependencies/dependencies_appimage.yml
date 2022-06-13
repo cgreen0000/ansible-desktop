@@ -1,0 +1,41 @@
+- name: Dependencies | AppImage | AppImageLauncher | Add PPA
+  ansible.builtin.apt_repository:
+    repo: 'ppa:appimagelauncher-team/stable'
+  when: ansible_os_family == "Debian"
+
+- name: Dependencies | AppImage | AppImageLauncher | install on Debian OS family
+  ansible.builtin.apt:
+    name:
+      - appimagelauncher
+  when: ansible_os_family == "Debian"
+
+- name: Dependencies | AppImage | AppImageLauncher | Install on ArchLinux OS family
+  kewlfft.aur.aur:
+    name: appimagelauncher
+    use: yay
+    state: present
+  become: yes
+  become_user: aur_builder
+  when: ansible_os_family == "Archlinux"
+
+- name: Dependencies | AppImage | AppImageLauncher | Create Applications directory
+  ansible.builtin.file:
+    path: /home/{{ user.name }}/Applications
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    state: directory
+  loop: "{{ users }}"
+  loop_control:
+    loop_var: user
+
+# Not sure if this is worth keeping.
+# Most zap commands require user interaction and therefore are not scriptable.
+#- name: Dependencies | AppImage | Install Zap package manager for AppImages
+#  ansible.builtin.get_url:
+#    url: https://github.com/srevinsaju/zap/releases/download/continuous/zap-amd64
+#    dest: /usr/local/bin/zap
+
+#- name: Dependencies | AppImage | Set execute permissions for zap
+#  ansible.builtin.file:
+#    dest: /usr/local/bin/zap
+#    mode: +x

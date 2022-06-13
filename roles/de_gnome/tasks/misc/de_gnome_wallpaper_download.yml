@@ -1,0 +1,55 @@
+- name: System Setup | Wallpaper | Download
+  block:
+  - name: System Setup | Wallpaper | Download RedMoon.jpg
+    ansible.builtin.get_url:
+      url: https://i.redd.it/kmt2c5p3h3b81.jpg
+      dest: /usr/share/backgrounds/RedMoon.jpg
+      owner: root
+      group: root
+      mode: 0644
+  - name: System Setup | Wallpaper | Add RedMoon.jpg as available wallpaper
+    ansible.builtin.copy:
+      dest: "/usr/share/gnome-background-properties/redmoon.xml"
+      content: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <!DOCTYPE wallpapers SYSTEM "gnome-wp-list.dtd">
+        <wallpapers>
+          <wallpaper deleted="false">
+            <name>Red Moon</name>
+            <filename>/usr/share/backgrounds/RedMoon.jpg</filename>
+            <options>zoom</options>
+            <shade_type>solid</shade_type>
+            <pcolor>#000000</pcolor>
+            <scolor>#000000</scolor>
+          </wallpaper>
+        </wallpapers>
+
+  - name: System Setup | Wallpaper | Download IronManNeon.jpg
+    ansible.builtin.get_url:
+      url: https://i.redd.it/igi2uaaxebb81.jpg
+      dest: /usr/share/backgrounds/IronManNeon.jpg
+      owner: root
+      group: root
+      mode: 0644
+  - name: System Setup | Wallpaper | Add IronManNeon.jpg as available wallpaper
+    ansible.builtin.copy:
+      dest: "/usr/share/gnome-background-properties/IronManNeon.xml"
+      content: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <!DOCTYPE wallpapers SYSTEM "gnome-wp-list.dtd">
+        <wallpapers>
+          <wallpaper deleted="false">
+            <name>Red Moon</name>
+            <filename>/usr/share/backgrounds/IronManNeon.jpg</filename>
+            <options>zoom</options>
+            <shade_type>solid</shade_type>
+            <pcolor>#000000</pcolor>
+            <scolor>#000000</scolor>
+          </wallpaper>
+        </wallpapers>
+        
+  when: de_gnome_wallpaper_download is defined and de_gnome_wallpaper_download == true
+  
+# Other wallpapers
+# Beach at dusk https://i.redd.it/3towl83gg3b81.jpg
+# A rainy night in London https://i.redd.it/r4hxr6xyyga81.jpg

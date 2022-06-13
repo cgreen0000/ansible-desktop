@@ -1,0 +1,6 @@
+- name: Software | Install Bottles flatpak
+  community.general.flatpak:
+    name:
+      - com.usebottles.bottles
+    state: present
+  when: bottles_flatpak is defined and bottles_flatpak == true

@@ -1,0 +1,82 @@
+# System configuration | Dependencies
+dependencies_general: true
+dependencies_appimage: false
+dependencies_flatpak: true
+dependencies_snap: true
+
+# System configuration | fonts
+font_meslolgs_nf: false
+
+
+ssh_users: "ansibleadmin chris"
+ssh_template_file: sshd_config_archlinux.j2
+theme_gtk_set: true
+theme_icon_candy_icons: true
+theme_icon_numix_circle: true
+theme_icon_papirus: true
+theme_icon_set: true
+theme_shell_nordic_darker: true
+theme_shell_sweet: false
+theme_shell_set: true
+wallpaper_download: true
+wallpaper_set: true
+zsh: false
+
+# Language settings
+lang_japanese: true
+
+# Favorite apps
+firefox_flatpak: true
+libreoffice: true
+
+# Desktop Environment
+desktop_environment: "gnome"
+de_gnome_dashtodock: true
+de_gnome_extensions: true
+de_gnome_favorite_apps: true
+
+# General Software
+alacarte: false
+anki_flatpak: false
+anki_tarball: false
+base_aptpackages: false
+base_flatpaks: false
+base_packages: false
+bottles: false
+calibre: false
+chromium: false
+clamtk: false
+dconfeditor: true
+discord: false
+dropbox: false
+flameshot: false
+flatseal: false
+gimp: false
+gnomeextensions_flatpak: false
+nextcloudclient: false
+vlc_flatpak: true
+winehq_apt_ubuntu2110: false
+
+# Remove unwanted software
+remove_firefox_snap: false
+
+# Development Software
+git: false
+godotmono: true
+imagemagick: false
+inkscape: false
+krita: false
+monosdk: true
+powershell_snap: true
+renpy: true
+terraform: true
+twine_flatpak: true
+twine_tarball: false
+unityhub_flatpak: false
+vscode: true
+
+# Gaming software
+lutris: true
+minigalaxy: false
+protonupqt: false
+steam: true

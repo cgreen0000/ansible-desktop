@@ -1,0 +1,7 @@
+---
+roles:
+  - name: petermosmans.customize-gnome
+
+collections:
+  - name: community.general
+  - name: kewlfft.aur

@@ -1,0 +1,53 @@
+- name: Software | VS Code | Setup VS Code and dependencies
+  block:
+    - name: Software | VS Code | Add Microsofts Apt signing key
+      ansible.builtin.apt_key:
+        url: https://packages.microsoft.com/keys/microsoft.asc
+        keyring: /etc/apt/trusted.gpg.d/packages.microsoft.gpg
+        state: present
+      when: ansible_distribution == "Ubuntu"
+
+    - name: Software | VS Code | Add Microsofts VS Code repo into sources list
+      ansible.builtin.apt_repository:
+        repo: deb https://packages.microsoft.com/repos/code stable main
+        state: present
+        filename: vscode
+        update_cache: yes
+      when: ansible_distribution == "Ubuntu"
+
+    - name: Software | VS Code | Install VS Code and dependencies
+      ansible.builtin.apt:
+        name:
+          - apt-transport-https
+          - code
+        state: present
+      when: ansible_distribution == "Ubuntu"
+
+    - name: Software | VS Code | Add Microsofts yum repo
+      ansible.builtin.yum_repository:
+        name: Visual Studio Code
+        description: Microsoft Visual Studio Code repo
+        file: vscode
+        baseurl: https://packages.microsoft.com/yumrepos/vscode
+        gpgcheck: yes
+        gpgkey: https://packages.microsoft.com/keys/microsoft.asc
+        enabled: yes
+        state: present
+      when: ansible_os_family == "RedHat"
+
+    - name: Software | VS Code | Install code package
+      ansible.builtin.package:
+        name: code
+        state: present
+      when: ansible_os_family == "RedHat"
+
+    - name: Software | VS Code | Install visual-studio-code-bin on Arch Linux OS family from the AUR
+      kewlfft.aur.aur:
+        name: visual-studio-code-bin
+        use: yay
+        state: present
+      become: yes
+      become_user: aur_builder
+      when: ansible_os_family == "Archlinux"
+
+  when: vscode is defined and vscode == true

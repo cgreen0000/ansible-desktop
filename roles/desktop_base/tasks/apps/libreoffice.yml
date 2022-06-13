@@ -1,0 +1,24 @@
+- name: Software | Install libreoffice
+  block:
+  - name: Software | libreoffice | Add repository
+    ansible.builtin.apt_repository:
+      repo: 'ppa:libreoffice/ppa'
+      state: present
+    when: ansible_distribution == "Ubuntu"
+
+  - name: Software | Install libreoffice for Debian or Red Hat OS families
+    ansible.builtin.package:
+      name:
+        - libreoffice
+      state: present
+    when: ansible_os_family == "Debian" or
+          ansible_os_family == "RedHat"
+
+  - name: Software | Install libreoffice-fresh for Archlinux OS family
+    community.general.pacman:
+      name:
+        - libreoffice
+      state: present
+    when: ansible_os_family == "Archlinux"
+
+  when: libreoffice is defined and libreoffice == true

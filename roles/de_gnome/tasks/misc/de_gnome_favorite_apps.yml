@@ -1,0 +1,8 @@
+- name: System Setup | gnome favorite_apps | Set favorite apps
+  become_user: "{{ item.name }}"
+  community.general.dconf:
+    key: /org/gnome/shell/favorite-apps
+    value: "{{ item.favorites | string }}"
+    state: present
+  with_items: "{{ users }}"
+  when: de_gnome_favorite_apps is defined and de_gnome_favorite_apps == true

@@ -1,0 +1,26 @@
+- name: System Setup | DE | Gnome | Terminal | Disable audible bell
+  become_user: "{{ user.name }}"
+  community.general.dconf:
+    key: "/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/audible-bell"
+    value: "false"
+  loop: "{{ users }}"
+  loop_control:
+    loop_var: user
+
+- name: System Setup | DE | Gnome | Terminal | Set font as MesloLGS NF 12
+  become_user: "{{ user.name }}"
+  community.general.dconf:
+    key: "/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/font"
+    value: "'MesloLGS NF 12'"
+  loop: "{{ users }}"
+  loop_control:
+    loop_var: user
+
+- name: System Setup | DE | Gnome | Terminal | Disable use-system-font
+  become_user: "{{ user.name }}"
+  community.general.dconf:
+    key: "/org/gnome/terminal/legacy/profiles:/:b1dcc9dd-5262-4d8d-a863-c897e6d979b9/use-system-font"
+    value: "false"
+  loop: "{{ users }}"
+  loop_control:
+    loop_var: user

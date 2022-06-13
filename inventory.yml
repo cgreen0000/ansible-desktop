@@ -1,0 +1,17 @@
+all:
+  children:
+    de_gnome:
+      hosts:
+        ubuntudesk2110.proxmox.test:
+        fedorawkst35.proxmox.test:
+        archlinux.proxmox.test:
+    desktop_dev:
+      hosts:
+        ubuntudesk2110.proxmox.test:
+        fedorawkst35.proxmox.test:
+        archlinux.proxmox.test:
+    desktop_gaming:
+      hosts:
+        ubuntudesk2110.proxmox.test:
+        fedorawkst35.proxmox.test:
+        archlinux.proxmox.test:

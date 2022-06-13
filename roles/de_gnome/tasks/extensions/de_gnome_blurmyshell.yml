@@ -1,0 +1,15 @@
+- name: System Setup | gnome | blur-my-shell | Disable blur-dash
+  become_user: "{{ item.name }}"
+  community.general.dconf:
+    key: /org/gnome/shell/extensions/blur-my-shell/blur-dash
+    value: "false"
+    state: present
+  with_items: "{{ users }}"
+
+- name: System Setup | gnome | dash-to-dock | Disable blur-panel
+  become_user: "{{ item.name }}"
+  community.general.dconf:
+    key: /org/gnome/shell/extensions/blur-my-shell/blur-panel
+    value: "false"
+    state: present
+  with_items: "{{ users }}"

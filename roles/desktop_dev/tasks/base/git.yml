@@ -1,0 +1,6 @@
+- name: Software | Install git package
+  ansible.builtin.package:
+    name:
+      - git
+    state: present
+  when: git is defined and git == true

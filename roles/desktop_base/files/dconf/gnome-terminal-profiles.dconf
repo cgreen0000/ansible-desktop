@@ -1,0 +1,16 @@
+[/]
+default='35e49cb6-e916-4ffc-bff0-78204bc95a34'
+list=['b1dcc9dd-5262-4d8d-a863-c897e6d979b9', '35e49cb6-e916-4ffc-bff0-78204bc95a34']
+
+[:35e49cb6-e916-4ffc-bff0-78204bc95a34]
+font='MesloLGS NF 12'
+use-system-font=false
+use-theme-transparency=false
+use-transparent-background=true
+visible-name='CustomDefault'
+
+[:b1dcc9dd-5262-4d8d-a863-c897e6d979b9]
+use-system-font=true
+use-theme-colors=true
+use-theme-transparency=true
+use-transparent-background=false

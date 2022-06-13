@@ -1,0 +1,33 @@
+- name: Install snapd on Arch Linux from the AUR
+  kewlfft.aur.aur:
+    name: snapd
+    use: yay
+    state: present
+  become: yes
+  become_user: aur_builder
+  notify: Reboot system
+  when: ansible_distribution == "Archlinux"
+
+- name: Install the snapd package
+  ansible.builtin.package:
+    name: snapd
+    state: present
+  notify: Reboot system
+  when: ansible_os_family == "Debian" or
+        ansible_os_family == "RedHat"
+
+- name: Start the snapd.socket service
+  ansible.builtin.service:
+    name: snapd.socket
+    enabled: yes
+    state: started
+
+- name: Create a symbolic link /var/lib/snapd/snap for classic snap support
+  ansible.builtin.file:
+    src: /var/lib/snapd/snap
+    dest: /snap
+    state: link
+  when: ansible_distribution == "Archlinux"
+
+- name: Flush handlers to trigger reboot after installing snapd
+  meta: flush_handlers

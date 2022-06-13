@@ -1,0 +1,24 @@
+# This would preferably be added prior to Ansible configuring the device.
+# A better use for this is if the key ever needs to be changed.
+- name: add ssh key for ansibleadmin
+  tags: always
+  authorized_key:
+    user: ansibleadmin
+    key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILTHtKXYDCb5/TeRFydUOiSnEk+WGsOOcLi02/rUCmZ4 ansible"
+  when: ansible_os_family == "Debian" or
+        ansible_os_family == "RedHat" or
+        ansible_os_family == "Archlinux"
+
+- name: generate sshd_config file from template
+  tags: ssh
+  template:
+    src: "{{ ssh_template_file }}"
+    dest: /etc/ssh/sshd_config
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart_sshd
+  when: ansible_distribution == "Debian" or
+        ansible_distribution == "Ubuntu" or
+        ansible_distribution == "Fedora" or
+        ansible_distribution == "Archlinux"

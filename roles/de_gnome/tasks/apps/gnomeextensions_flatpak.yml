@@ -1,0 +1,7 @@
+- name: Software | Install gnome extensions flatpak
+  community.general.flatpak:
+    name:
+      - org.gnome.Extensions
+    state: present
+  when: gnomeextensions_flatpak is defined and 
+        gnomeextensions_flatpak == true

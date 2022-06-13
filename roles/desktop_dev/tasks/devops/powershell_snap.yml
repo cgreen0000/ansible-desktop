@@ -1,0 +1,7 @@
+- name: Install powershell snap
+  community.general.snap:
+    name:
+      - powershell
+    classic: yes
+    state: present
+  when: powershell_snap is defined and powershell_snap == true

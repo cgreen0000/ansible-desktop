@@ -1,0 +1,6 @@
+- name: Software | Install calibre flatpak
+  community.general.flatpak:
+    name:
+      - com.calibre_ebook.calibre
+    state: present
+  when: calibre_flatpak is defined and calibre_flatpak == true

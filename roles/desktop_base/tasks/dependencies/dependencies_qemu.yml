@@ -1,0 +1,36 @@
+# This also needs enabled on the host.
+# https://pve.proxmox.com/wiki/Qemu-guest-agent
+# https://pve.proxmox.com/wiki/SPICE
+- name: Install Qemu guest agent and spice-vdagent
+  tags: qemu
+  ansible.builtin.package:
+    name:
+      - qemu-guest-agent
+      - spice-vdagent
+    state: present
+  when: ansible_system_vendor == "QEMU" and
+        (ansible_os_family == "Debian" or
+        ansible_os_family == "RedHat" or
+        ansible_os_family == "Archlinux")
+
+- name: Start the qemu-guest-agent service
+  tags: qemu
+  ansible.builtin.service:
+    name: qemu-guest-agent
+    enabled: yes
+    state: started
+  when: ansible_system_vendor == "QEMU" and
+        (ansible_os_family == "Debian" or
+        ansible_os_family == "RedHat" or
+        ansible_os_family == "Archlinux")
+    
+- name: Start the spice-vdagentd service
+  tags: qemu
+  ansible.builtin.service:
+    name: spice-vdagentd
+    enabled: yes
+    state: started
+  when: ansible_system_vendor == "QEMU" and
+        (ansible_os_family == "Debian" or
+        ansible_os_family == "RedHat" or
+        ansible_os_family == "Archlinux")

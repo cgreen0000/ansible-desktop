@@ -1,0 +1,8 @@
+- name: System Setup | gnome dash-to-dock | Set click-action
+  become_user: "{{ item.name }}"
+  community.general.dconf:
+    key: /org/gnome/shell/extensions/dash-to-dock/click-action
+    value: "'minimize'"
+    state: present
+  with_items: "{{ users }}"
+  when: de_gnome_dashtodock is defined and de_gnome_dashtodock == true

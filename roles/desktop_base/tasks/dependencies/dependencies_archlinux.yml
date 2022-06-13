@@ -1,0 +1,31 @@
+- name: Create the `aur_builder` user for installing AUR packages
+  ansible.builtin.user:
+    name: aur_builder
+    create_home: yes
+    group: wheel
+
+- name: Allow the `aur_builder` user to run `sudo pacman` without a password
+  ansible.builtin.lineinfile:
+    path: /etc/sudoers.d/aur_builder
+    line: 'aur_builder ALL=(ALL) NOPASSWD: /usr/bin/pacman'
+    create: yes
+    validate: '/usr/sbin/visudo -cf %s'
+
+- name: Install git to allow cloning PKGBUILD files from AUR
+  community.general.pacman:
+    name: git
+    state: present
+
+- name: Install base-devel for makepkg dependencies to allow building from AUR
+  community.general.pacman:
+    name: base-devel
+    state: present
+
+- name: Install the yay AUR helper with makepkg
+  kewlfft.aur.aur:
+    name: yay
+    use: makepkg
+    state: present
+  become: yes
+  become_user: aur_builder
+

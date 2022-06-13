@@ -1,0 +1,70 @@
+- name: Software | Godot Mono | Install on Arch Linux
+  block:
+  
+  - name: Software | Godot Mono | Install prerequisites on Arch Linux OS family
+    community.general.pacman:
+      name:
+        - dotnet-sdk
+        - mono
+        - mono-msbuild 
+      state: present
+      
+  - name: Software | Godot Mono | Install godot-mono-bin from AUR
+    kewlfft.aur.aur:
+      name: godot-mono-bin
+      use: yay
+      state: present
+    become: yes
+    become_user: aur_builder
+
+  when: ansible_os_family == "Archlinux"
+
+- name: Setup Godot Mono
+  block:
+    - name: Software | Godot Mono | Get latest Godot release
+      community.general.github_release:
+        user: "{{ user }}"
+        repo: "{{ repo }}"
+        action: latest_release
+      register: release
+
+    - name: Print latest release
+      ansible.builtin.debug:
+        var: release
+
+    - name: Download Godot Mono {{ release['tag'] }}
+      ansible.builtin.unarchive:
+        src: https://github.com/{{ user }}/{{ repo }}/releases/download/{{ release['tag'] }}/Godot_v{{ release['tag'] }}_mono_x11_64.zip
+        dest: /home/chris/portableapps
+        creates: /home/chris/portableapps/Godot_v{{ release['tag'] }}_mono_x11_64/Godot_v{{ release['tag'] }}_mono_x11.64
+        remote_src: yes
+        owner: chris
+        group: chris
+        
+    - name: Download Godot icon
+      ansible.builtin.get_url:
+        url: https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Godot_icon.svg/600px-Godot_icon.svg.png
+        dest: /home/chris/portableapps/Godot_v{{ release['tag'] }}_mono_x11_64/Godot_icon.svg
+        group: chris
+        owner: chris
+
+    - name: Create desktop file for Godot Game Engine
+      ansible.builtin.copy:
+        dest: /home/chris/.local/share/applications/godot.desktop
+        content: |
+          [Desktop Entry]
+          Name=Godot Game Engine
+          Comment=Godot Game Engine
+          Exec=/home/chris/portableapps/Godot_v{{ release['tag'] }}_mono_x11_64/Godot_v{{ release['tag'] }}_mono_x11.64
+          Terminal=false
+          Type=Application
+          Icon=/home/chris/portableapps/Godot_v{{ release['tag'] }}_mono_x11_64/Godot_icon.svg
+        group: chris
+        owner: chris
+
+  vars:
+    user: godotengine
+    repo: godot
+  when: ansible_os_family == "Debian" or
+        ansible_os_family == "RedHat"
+

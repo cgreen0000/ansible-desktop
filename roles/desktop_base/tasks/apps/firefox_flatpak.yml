@@ -1,0 +1,15 @@
+- name: Software | Install Firefox flatpak
+  block:
+  - name: Remove firefox package
+    ansible.builtin.package:
+      name:
+        - firefox
+      state: absent
+
+  - name: Software | Install Firefox flatpak
+    community.general.flatpak:
+      name:
+        - org.mozilla.firefox
+      state: present
+
+  when: firefox_flatpak is defined and firefox_flatpak == true

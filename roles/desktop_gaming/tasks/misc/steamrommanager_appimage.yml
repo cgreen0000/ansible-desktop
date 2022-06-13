@@ -1,0 +1,27 @@
+- name: Software | Steam ROM Manager
+  block:
+    - name: Software | Steam ROM Manager | Get latest release
+      community.general.github_release:
+        user: "{{ github_user }}"
+        repo: "{{ github_repo }}"
+        action: latest_release
+      register: release
+
+    - name: Software | Steam ROM Manager | Print latest release
+      ansible.builtin.debug:
+        var: release
+
+    - name: Software | Steam ROM Manager | Download appimage version {{ release['tag'] }}
+      become_user: "{{ user.name }}"
+      ansible.builtin.get_url:
+        url: "https://github.com/{{ github_user }}/{{ github_repo }}/releases/download/{{ release['tag'] }}/Steam-ROM-Manager-{{ release['tag'] | regex_replace('v','') }}.AppImage"
+        dest: "/home/{{ user.name }}/Applications/Steam-ROM-Manager-{{ release['tag'] }}.AppImage"
+        owner: "{{ user.name }}"
+        group: "{{ user.name }}"
+      loop: "{{ users }}"
+      loop_control:
+        loop_var: user
+
+  vars:
+    github_user: SteamGridDB
+    github_repo: steam-rom-manager

@@ -1,0 +1,54 @@
+---
+
+- hosts: all
+  become: true
+  pre_tasks:
+
+  - name: dnf | update repository index
+    tags: always
+    ansible.builtin.dnf:
+      update_cache: yes
+    when: ansible_pkg_mgr == "dnf"
+
+  - name: apt | update repository index
+    tags: always
+    ansible.builtin.apt:
+      update_cache: yes
+      cache_valid_time: 3600
+    when: ansible_pkg_mgr == "apt"
+
+- hosts: all
+  become: true
+  roles:
+    - desktop_base
+    
+- hosts: de_gnome
+  tags: de_gnome
+  become: true
+  vars:
+    gnome_user: chris
+    gnome_extensions:
+      - id: 7     # Removable Drive Menu by fmuellner
+      - id: 19    # User Themes by fmuellner. Often required for other extensions.
+      - id: 307   # Dash to Dock by michele_g. Replaces the Ubuntu Dock.
+      - id: 517   # Caffeine by eon
+      - id: 615   # AppIndicator and KStatus NotifierItem Support by 3v1n0
+      - id: 779   # Clipboard Indicator by Tudmotu
+      - id: 1160  # Dash to Panel by charlesg99
+      - id: 3193  # Blur my Shell by aunetx
+      - id: 3733  # Tiling Assistant by Laleat
+      - id: 3843  # Just Perfection by JustPerfection
+      - id: 4648  # Desktop Cube by Simme
+  roles:
+    - petermosmans.customize-gnome
+    - de_gnome
+
+- hosts: desktop_dev
+  become: true
+  roles:
+    - role: desktop_dev
+
+- hosts: desktop_gaming
+  become: true
+  roles:
+    - role: desktop_gaming

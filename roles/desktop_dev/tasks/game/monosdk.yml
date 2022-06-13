@@ -1,0 +1,49 @@
+- name: Software | Mono SDK | Install on Ubuntu
+  block:
+  
+  - name: Software | Mono SDK | Add Mono SDK apt key
+    ansible.builtin.apt_key:
+      keyserver: keyserver.ubuntu.com
+      id: 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
+
+  - name: Software | Mono SDK | Add Mono SDK repository
+    ansible.builtin.apt_repository:
+      repo: deb https://download.mono-project.com/repo/ubuntu stable-focal main
+      state: present
+      filename: mono-official-stable
+
+  - name: Software | Mono SDK | Install Prerequisites
+    ansible.builtin.apt:
+      name:
+        - ca-certificates
+        - gnupg
+      state: present
+
+  - name: Software | Mono SDK | Install Mono SDK
+    ansible.builtin.apt:
+      name:
+        - mono-devel
+        - mono-complete
+        - mono-dbg
+        - referenceassemblies-pcl
+        - ca-certificates-mono
+        - mono-xsp4
+      state: present
+
+  when: ansible_distribution == "Ubuntu"
+
+- name: Software | Mono | Install on Arch Linux
+  block:
+  
+  - name: Software | Mono | Install mono development tools
+    community.general.pacman:
+      name:
+        - ca-certificates
+        - mono
+        - mono-addins
+        - mono-msbuild
+        - mono-tools
+        - referenceassemblies-pcl
+      state: present
+
+  when: ansible_os_family == "Archlinux"

@@ -1,0 +1,43 @@
+- name: Software | Hashicorp | Add Hashicorps Apt signing key
+  ansible.builtin.apt_key:
+    url: https://apt.releases.hashicorp.com/gpg
+    keyring: /etc/apt/trusted.gpg.d/apt.hashicorp.gpg
+    state: present
+  when: ansible_os_family == "Debian"
+
+- name: Software | Hashicorp | Add Hashicorps apt repo into sources list
+  ansible.builtin.apt_repository:
+    repo: deb [arch=amd64] https://apt.releases.hashicorp.com {{ ansible_lsb.codename|lower }} main
+    state: present
+    filename: hashicorp
+    update_cache: yes
+  when: ansible_os_family == "Debian"
+
+- name: Software | Hashicorp | Install dnf-plugins-core dependency
+  ansible.builtin.dnf:
+    name:
+      - dnf-plugins-core
+    state: present
+  when: ansible_distribution == "Fedora"
+
+- name: Software | Hashicorp | Add Hashicorps yum repo
+  ansible.builtin.yum_repository:
+    name: hashicorp
+    description: Hashicorp yum repo
+    baseurl: https://rpm.releases.hashicorp.com/fedora/hashicorp.repo
+    state: present
+  when: ansible_os_family == "RedHat"
+
+- name: Software | Hashicorp | Install packer package
+  ansible.builtin.package:
+    name:
+      - packer
+    state: present
+  when: packer is defined and packer == true
+    
+- name: Software | Terraform | Install terraform package
+  ansible.builtin.package:
+    name:
+      - terraform
+    state: present
+  when: terraform is defined and terraform == true

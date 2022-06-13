@@ -1,0 +1,6 @@
+- name: Software | Install Heroic Games Launcher flatpak
+  community.general.flatpak:
+    name:
+      - com.heroicgameslauncher.hgl
+    state: present
+  when: heroicgameslauncher_flatpak is defined and heroicgameslauncher_flatpak == true

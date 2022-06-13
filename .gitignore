@@ -1,0 +1,8 @@
+# This directory contains collections from Ansible Galaxy
+ansible_collections/
+
+# Roles that get downloaded directly from Ansible Galaxy
+roles/petermosmans.customize-gnome/
+
+# Subfolders of roles that should be excluded.
+roles/workstations/files/themes/

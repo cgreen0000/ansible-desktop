@@ -1,0 +1,6 @@
+- name: Software | Install dconf-editor package
+  ansible.builtin.package:
+    name:
+      - dconf-editor
+    state: present
+  when: dconfeditor is defined and dconfeditor == true

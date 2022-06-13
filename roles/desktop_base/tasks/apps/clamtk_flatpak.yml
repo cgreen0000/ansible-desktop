@@ -1,0 +1,6 @@
+- name: Software | Install ClamTk flatpak
+  community.general.flatpak:
+    name:
+      - com.gitlab.davem.ClamTk
+    state: present
+  when: clamtk_flatpak is defined and clamtk_flatpak == true

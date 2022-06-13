@@ -1,0 +1,6 @@
+- name: Software | Install Nextcloud client flatpak
+  community.general.flatpak:
+    name:
+      - com.nextcloud.desktopclient.nextcloud
+    state: present
+  when: nextcloudclient_flatpak is defined and nextcloudclient_flatpak == true

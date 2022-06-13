@@ -1,0 +1,6 @@
+- name: Software | Install RetroArch flatpak
+  community.general.flatpak:
+    name:
+      - org.libretro.RetroArch
+    state: present
+  when: retroarch_flatpak is defined and retroarch_flatpak == true

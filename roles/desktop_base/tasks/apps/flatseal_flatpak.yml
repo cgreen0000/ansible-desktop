@@ -1,0 +1,6 @@
+- name: Software | Install flatseal flatpak
+  community.general.flatpak:
+    name:
+      - com.github.tchx84.Flatseal
+    state: present
+  when: flatseal_flatpak is defined and flatseal_flatpak == true

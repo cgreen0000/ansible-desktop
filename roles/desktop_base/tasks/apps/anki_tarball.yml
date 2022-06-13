@@ -1,0 +1,33 @@
+- name: Setup Anki
+  block:
+    - name: Get latest Anki release
+      community.general.github_release:
+        user: "{{ user }}"
+        repo: "{{ repo }}"
+        action: latest_release
+      register: release
+
+    - name: Print latest release
+      ansible.builtin.debug:
+        var: release
+
+    - name: Create Anki-{{ release['tag'] }} directory
+      ansible.builtin.file:
+        path: "/home/chris/portableapps/Anki-{{ release['tag'] }}"
+        owner: chris
+        group: chris
+        state: directory
+
+    - name: Download Anki {{ release['tag'] }}
+      ansible.builtin.unarchive:
+        src: https://github.com/{{ user }}/{{ repo }}/releases/download/{{ release['tag'] }}/anki-{{ release['tag'] }}-linux.tar.bz2
+        dest: "/home/chris/portableapps/Anki-{{ release['tag'] }}"
+        creates: "/home/chris/portableapps/Anki-{{ release['tag'] }}/anki-{{ release['tag'] }}-linux/bin/Anki"
+        remote_src: yes
+        owner: chris
+        group: chris
+
+  vars:
+    user: ankitects
+    repo: anki
+  when: anki_tarball is defined and anki_tarball == true

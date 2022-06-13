@@ -1,0 +1,16 @@
+- name: System Setup | Theme | Icon | Install numix-icon-theme-circle package
+  ansible.builtin.package:
+    name:
+      - numix-icon-theme-circle
+    state: present
+  when: ansible_os_family == "Debian" or
+        ansible_os_family == "RedHat"
+
+- name: System Setup | Theme | Icon | Install numix-circle-icon-theme-git from AUR
+  kewlfft.aur.aur:
+    name: numix-circle-icon-theme-git
+    use: yay
+    state: present
+  become: yes
+  become_user: aur_builder
+  when: ansible_distribution == "Archlinux"

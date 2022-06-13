@@ -1,0 +1,15 @@
+- name: System Setup | Wallpaper | Set background
+  block:
+  - name: System Setup | Wallpaper | Set background
+    become_user: chris
+    community.general.dconf:
+      key: "/org/gnome/desktop/background/picture-uri"
+      value: "'file:////usr/share/backgrounds/RedMoon.jpg'"
+      
+  - name: System Setup | Wallpaper | Set position
+    become_user: chris
+    community.general.dconf:
+      key: "/org/gnome/desktop/background/picture-options"
+      value: "'zoom'"
+      
+  when: de_gnome_wallpaper_set is defined and de_gnome_wallpaper_set == true

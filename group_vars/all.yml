@@ -1,0 +1,18 @@
+ssh_users: "ansibleadmin chris"
+users:
+  - name: chris
+    favorites:
+      - org.mozilla.firefox.desktop
+      - org.gnome.Terminal.desktop
+      - org.gnome.Nautilus.desktop
+      - libreoffice-writer.desktop
+    gnome_extensions:
+      - user-theme@gnome-shell-extensions.gcampax.github.com
+      - dash-to-dock@micxgx.gmail.com
+      - clipboard-indicator@tudmotu.com
+      - drive-menu@gnome-shell-extensions.gcampax.github.com
+      - caffeine@patapon.info
+      - desktop-cube@schneegans.github.com
+      - blur-my-shell@aunetx
+      - tiling-assistant@leleat-on-github
+      - appindicatorsupport@rgcjonas.gmail.com

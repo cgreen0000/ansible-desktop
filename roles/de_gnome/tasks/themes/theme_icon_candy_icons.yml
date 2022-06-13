@@ -1,0 +1,10 @@
+- name: System Setup | Theme | Icon | Download candy-icons
+  ansible.builtin.unarchive:
+    src: https://github.com/{{ user }}/{{ repo }}/archive/refs/heads/master.zip
+    dest: /usr/share/icons
+    creates: /usr/share/icons/candy-icons-master/index.theme
+    remote_src: yes
+  vars:
+    user: EliverLara
+    repo: candy-icons
+  when: theme_icon_candy_icons is defined and theme_icon_candy_icons == true

@@ -1,0 +1,23 @@
+# desktop_dev | base
+- include_tasks: base/git.yml
+- include_tasks: base/vscode.yml
+- include_tasks: base/vscode_flatpak.yml
+  when: vscode_flatpak is defined and vscode_flatpak == true
+
+# desktop_dev | devops
+- include_tasks: devops/hashicorp_software.yml
+  when: packer is defined and packer == true or
+        terraform is defined and terraform == true
+- include_tasks: devops/powershell_snap.yml
+
+# desktop_dev | game
+- include_tasks: game/godotmono.yml
+  when: godotmono is defined and godotmono == true
+- include_tasks: game/monosdk.yml
+  when: monosdk is defined and monosdk == true
+- include_tasks: game/unityhub_flatpak.yml
+
+# desktop_dev | graphics
+- include_tasks: graphics/imagemagick.yml
+- include_tasks: graphics/inkscape.yml
+- include_tasks: graphics/krita.yml

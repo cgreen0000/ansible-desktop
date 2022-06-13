@@ -1,0 +1,77 @@
+- name: Dependencies | general | folders | Create icons dir for app shortcut icons
+  ansible.builtin.file:
+    path: "/home/{{ user.name }}/.icons"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    state: directory
+  loop: "{{ users }}"
+  loop_control:
+    loop_var: user
+
+- name: Dependencies | general | folders | Create .themes dir for themes installation
+  ansible.builtin.file:
+    path: "/home/{{ user.name }}/.themes"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    state: directory
+  loop: "{{ users }}"
+  loop_control:
+    loop_var: user
+
+- name: Dependencies | general | folders | Create temp dir for staging app installs
+  ansible.builtin.file:
+    path: "/home/{{ user.name }}/temp"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    state: directory
+  loop: "{{ users }}"
+  loop_control:
+    loop_var: user
+    
+- name: Dependencies | general | folders | Create portableapps dir
+  ansible.builtin.file:
+    path: "/home/{{ user.name }}/portableapps"
+    owner: "{{ user.name }}"
+    group: "{{ user.name }}"
+    state: directory
+  loop: "{{ users }}"
+  loop_control:
+    loop_var: user
+
+- name: Dependencies | general | Install Ansible pip module dependencies for Debian OS family
+  ansible.builtin.apt:
+    name:
+      - python3-pip
+      - python3-venv
+      - python3-setuptools
+    state: present
+  when: ansible_os_family == "Debian"
+
+- name: Dependencies | general | Install Ansible pip module dependencies for RedHat OS family
+  ansible.builtin.dnf:
+    name:
+      - python3-pip
+      - python3-virtualenv
+      - python3-setuptools
+    state: present
+  when: ansible_os_family == "RedHat"
+
+- name: Dependencies | general | Install Ansible pip module dependencies for Archlinux OS family
+  community.general.pacman:
+    name:
+      - python-pip
+      - python-virtualenv
+      - python-setuptools
+    state: present
+  when: ansible_os_family == "Archlinux"
+
+- name: Dependencies | general | Install github3.py for Ansible github_release module
+  ansible.builtin.pip:
+    name:
+      - github3.py
+
+- name: Dependencies | general | Install psutil module for Ansible dconf module
+  ansible.builtin.pip:
+    name:
+      - psutil
+

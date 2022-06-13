@@ -1,0 +1,15 @@
+- name: System Setup | Theme | Icon | Papirus
+  block:
+  - name: System Setup | Theme | Icon | Add Papirus icon theme repository to Ubuntu
+    ansible.builtin.apt_repository:
+      repo: 'ppa:papirus/papirus'
+      state: present
+    when: ansible_distribution == "Ubuntu"
+
+  - name: System Setup | Theme | Icon | Install papirus-icon-theme package
+    ansible.builtin.package:
+      name:
+        - papirus-icon-theme
+      state: present
+
+  when: theme_icon_papirus is defined and theme_icon_papirus == true

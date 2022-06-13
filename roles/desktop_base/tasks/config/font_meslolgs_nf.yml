@@ -1,0 +1,32 @@
+- name: System Setup | Font | Install MesloLGS NF
+  block:
+  - name: Create font directory
+    ansible.builtin.file:
+      path: /usr/share/fonts/truetype/meslolgs-nf
+      state: directory
+
+  - name: Download MesloLGS NF Regular truetype font.
+    ansible.builtin.get_url:
+      url: 'https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf'
+      dest: /usr/share/fonts/truetype/meslolgs-nf/MesloLGSNFRegular.ttf
+    notify: Refresh font cache
+
+  - name: Download MesloLGS NF Bold truetype font.
+    ansible.builtin.get_url:
+      url: 'https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf'
+      dest: /usr/share/fonts/truetype/meslolgs-nf/MesloLGSNFBold.ttf
+    notify: Refresh font cache
+
+  - name: Download MesloLGS NF Italic truetype font.
+    ansible.builtin.get_url:
+      url: 'https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf'
+      dest: /usr/share/fonts/truetype/meslolgs-nf/MesloLGSNFItalic.ttf
+    notify: Refresh font cache
+
+  - name: Download MesloLGS NF Bold Italic truetype font.
+    ansible.builtin.get_url:
+      url: 'https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf'
+      dest: /usr/share/fonts/truetype/meslolgs-nf/MesloLGSNFBoldItalic.ttf
+    notify: Refresh font cache
+    
+  when: font_meslolgs_nf is defined and font_meslolgs_nf == true

@@ -1,0 +1,6 @@
+- name: Software | Install Flameshot flatpak
+  community.general.flatpak:
+    name:
+      - org.flameshot.Flameshot
+    state: present
+  when: flameshot_flatpak is defined and flameshot_flatpak == true

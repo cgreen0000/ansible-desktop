@@ -1,0 +1,6 @@
+- name: Software | Install GIMP flatpak
+  community.general.flatpak:
+    name:
+      - org.bluesabre.MenuLibre
+    state: present
+  when: menulibre_flatpak is defined and menulibre_flatpak == true

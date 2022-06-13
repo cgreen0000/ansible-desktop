@@ -1,0 +1,49 @@
+- name: System Setup | Theme | Shell | Sweet
+  block:
+    - name: System Setup | Theme | Shell | Sweet Mars | Remove system installed version
+      ansible.builtin.file:
+        path: /usr/share/themes/Sweet-mars-v40
+        state: absent
+    
+    - name: System Setup | Theme | Shell | Sweet Dark | Remove system installed version
+      ansible.builtin.file:
+        path: /usr/share/themes/Sweet-Dark-v40
+        state: absent
+        
+    - name: System Setup | Theme | Shell | Sweet | Get latest Sweet theme release
+      community.general.github_release:
+        user: "{{ github_user }}"
+        repo: "{{ github_repo }}"
+        action: latest_release
+      register: release
+
+    - name: System Setup | Theme | Shell | Sweet | Print latest Sweet theme release
+      ansible.builtin.debug:
+        var: release
+
+    - name: System Setup | Theme | Shell | Sweet | Download Sweet Mars theme
+      become_user: "{{ user.name }}"
+      ansible.builtin.unarchive:
+        src: https://github.com/{{ github_user }}/{{ github_repo }}/releases/download/{{ release['tag'] }}/Sweet-mars-v40.zip
+        dest: /home/{{ user.name }}/.themes
+        creates: /home/{{ user.name }}/.themes/Sweet-mars-v40/index.theme
+        remote_src: yes
+      loop: "{{ users }}"
+      loop_control:
+        loop_var: user
+
+    - name: System Setup | Theme | Shell | Sweet | Download Sweet Dark theme
+      become_user: "{{ user.name }}"
+      ansible.builtin.unarchive:
+        src: https://github.com/{{ github_user }}/{{ github_repo }}/releases/download/{{ release['tag'] }}/Sweet-Dark-v40.zip
+        dest: /home/{{ user.name }}/.themes
+        creates: /home/{{ user.name }}/.themes/Sweet-Dark-v40/index.theme
+        remote_src: yes
+      loop: "{{ users }}"
+      loop_control:
+        loop_var: user
+
+  vars:
+    github_user: EliverLara
+    github_repo: Sweet
+  when: theme_shell_sweet is defined and theme_shell_sweet == true

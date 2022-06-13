@@ -1,0 +1,33 @@
+- name: System Setup | Set Gnome Themes | Set icon theme
+  become_user: "{{ user.name }}"
+  community.general.dconf:
+    key: "/org/gnome/desktop/interface/icon-theme"
+    value: "'Papirus-Dark'"
+  loop: "{{ users }}"
+  loop_control:
+    loop_var: user
+
+- name: System Setup | Set Gnome Themes | Set gtk theme
+  become_user: "{{ user.name }}"
+  community.general.dconf:
+    key: "/org/gnome/desktop/interface/gtk-theme"
+    value: "'Nordic-darker-v40'"
+  loop: "{{ users }}"
+  loop_control:
+    loop_var: user
+    
+- name: System Setup | Set Gnome Themes | Set shell theme
+  become_user: "{{ user.name }}"
+  community.general.dconf:
+    key: "/org/gnome/shell/extensions/user-theme/name"
+    value: "'Nordic-darker-v40'"
+  loop: "{{ users }}"
+  loop_control:
+    loop_var: user
+
+- name: System Setup | Set Gnome Themese | Set flatpak override for GTK_Theme to Nordic-darker-v40
+  ansible.builtin.command:
+    cmd: "flatpak override --env=GTK_THEME=Nordic-darker-v40"
+  changed_when: false
+  when: dependencies_flatpak is defined and dependencies_flatpak == true
+

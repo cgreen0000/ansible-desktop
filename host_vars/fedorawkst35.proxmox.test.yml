@@ -1,0 +1,65 @@
+# System setup and configuration
+font_meslolgs_nf: false
+gnome_favorite_apps: false
+ssh_users: "ansibleadmin chris"
+ssh_template_file: sshd_config_fedora.j2
+theme_gtk_set: true
+theme_icon_candy_icons: false
+theme_icon_numix: false
+theme_icon_papirus: true
+theme_icon_set: true
+theme_shell_nordic_darker: true
+theme_shell_sweet: false
+theme_shell_set: true
+wallpaper_download: true
+wallpaper_set: true
+zsh: false
+
+# General Software
+alacarte: false
+anki_flatpak: true
+anki_tarball: false
+base_aptpackages: false
+base_flatpaks: false
+base_packages: true
+bottles: false
+calibre: false
+chromium: false
+clamtk: false
+dependencies_appimage: false
+dependencies_flatpak: true
+dependencies_general: true
+discord: false
+dropbox: false
+firefox_flatpak: false
+flameshot: false
+flatseal: false
+gimp: false
+gnomeextensions_flatpak: true
+nextcloudclient: false
+vlc_flatpak: false
+winehq_apt_ubuntu2110: false
+
+# Remove unwanted software
+remove_firefox_snap: false
+
+# Development Software
+git: false
+godotmono: false
+imagemagick: false
+inkscape: false
+krita: false
+monosdk: false
+powershell_snap: false
+renpy: false
+terraform: false
+twine_flatpak: false
+twine_tarball: false
+unityhub_flatpak: false
+vscode: false
+
+# Gaming software
+lutris_apt: false
+minigalaxy: false
+protonupqt: false
+steam_apt: false

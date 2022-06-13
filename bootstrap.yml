@@ -1,0 +1,68 @@
+---
+
+- hosts: all
+  become: true
+  pre_tasks:
+
+  - name: dnf | install updates
+    tags: always
+    dnf:
+      update_only: yes
+      update_cache: yes
+    when: ansible_pkg_mgr == "dnf"
+
+  - name: apt | install updates
+    tags: always
+    apt:
+      upgrade: dist
+      update_cache: yes
+    when: ansible_pkg_mgr == "apt"
+
+- hosts: all
+  become: true
+  tasks:
+
+  - name: Install openssh-server package
+    ansible.builtin.package:
+      name:
+        - openssh-server
+      state: present
+    when: ansible_os_family == "Debian" or
+          ansible_os_family == "RedHat"
+
+  - name: Install openssh on Arch Linux distro
+    community.general.pacman:
+      name:
+        - openssh
+      state: present
+    when: ansible_os_family == "Archlinux"
+
+  - name: create ansibleadmin user
+    tags: always
+    ansible.builtin.user:
+      name: ansibleadmin
+      groups: root
+    when: ansible_os_family == "Debian" or
+          ansible_os_family == "RedHat" or
+          ansible_os_family == "Archlinux"
+
+  - name: add ssh key for ansibleadmin
+    tags: always
+    authorized_key:
+      user: ansibleadmin
+      key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILTHtKXYDCb5/TeRFydUOiSnEk+WGsOOcLi02/rUCmZ4 ansible"
+    when: ansible_os_family == "Debian" or
+          ansible_os_family == "RedHat" or
+          ansible_os_family == "Archlinux"
+
+  - name: Add sudoers file for ansibleadmin
+    tags: always
+    copy:
+      src: sudoer_ansibleadmin
+      dest: /etc/sudoers.d/ansibleadmin
+      owner: root
+      group: root
+      mode: 0440
+    when: ansible_os_family == "Debian" or
+          ansible_os_family == "RedHat" or
+          ansible_os_family == "Archlinux"

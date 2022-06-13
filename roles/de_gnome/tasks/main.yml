@@ -1,0 +1,33 @@
+# de_gnome | apps
+- include_tasks: apps/gnomeextensions.yml
+  when: gnomeextensions is defined and gnomeextensions == true
+- include_tasks: apps/gnomeextensions_flatpak.yml
+
+# de_gnome | extensions
+- include_tasks: extensions/de_gnome_blurmyshell.yml
+  when: de_gnome_blurmyshell is defined and de_gnome_blurmyshell == true
+- include_tasks: extensions/de_gnome_dashtodock.yml
+- include_tasks: extensions/de_gnome_dashtopanel.yml
+  when: de_gnome_dashtopanel is defined and de_gnome_dashtopanel == true
+- include_tasks: extensions/de_gnome_extensions.yml
+
+# de_gnome | misc
+- include_tasks: misc/de_gnome_favorite_apps.yml
+- include_tasks: misc/de_gnome_misc_settings.yml
+  when: desktop_environment is defined and desktop_environment == "gnome"
+- include_tasks: misc/de_gnome_templates.yml
+  when: desktop_environment is defined and desktop_environment == "gnome"
+- include_tasks: misc/de_gnome_terminal.yml
+  when: desktop_environment is defined and desktop_environment == "gnome"
+- include_tasks: misc/de_gnome_wallpaper_download.yml
+- include_tasks: misc/de_gnome_wallpaper_set.yml
+
+# de_gnome | themes
+- include_tasks: themes/de_gnome_set_themes.yml
+  when: de_gnome_set_themes is defined and de_gnome_set_themes == true
+- include_tasks: themes/theme_icon_candy_icons.yml
+- include_tasks: themes/theme_icon_numix_icon_theme_circle.yml
+  when: theme_icon_numix_circle is defined and theme_icon_numix_circle == true
+- include_tasks: themes/theme_icon_papirus.yml
+- include_tasks: themes/theme_shell_nordic_darker.yml
+- include_tasks: themes/theme_shell_sweet.yml

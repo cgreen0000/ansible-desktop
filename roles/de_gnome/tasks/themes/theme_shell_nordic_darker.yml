@@ -1,0 +1,33 @@
+- name: System Setup | Theme | Shell | Nordic Darker
+  block:
+    - name: System Setup | Theme | Shell | Nordic Darker | Remove system installed version
+      ansible.builtin.file:
+        path: /usr/share/themes/Nordic-darker-v40
+        state: absent
+
+    - name: System Setup | Theme | Shell | Nordic | Get latest release
+      community.general.github_release:
+        user: "{{ github_user }}"
+        repo: "{{ github_repo }}"
+        action: latest_release
+      register: release
+
+    - name: System Setup | Theme | Shell | Nordic | Print latest release
+      ansible.builtin.debug:
+        var: release
+
+    - name: System Setup | Theme | Shell | Nordic | Download Nordic-darker theme
+      become_user: "{{ user.name }}"
+      ansible.builtin.unarchive:
+        src: https://github.com/{{ github_user }}/{{ github_repo }}/releases/download/{{ release['tag'] }}/Nordic-darker-v40.tar.xz
+        dest: /home/{{ user.name }}/.themes
+        creates: /home/{{ user.name }}/.themes/Nordic-darker-v40/index.theme
+        remote_src: yes
+      loop: "{{ users }}"
+      loop_control:
+        loop_var: user
+
+  vars:
+    github_user: EliverLara
+    github_repo: Nordic
+  when: theme_shell_nordic_darker is defined and theme_shell_nordic_darker == true

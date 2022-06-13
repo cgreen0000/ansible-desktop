@@ -1,0 +1,5 @@
+- name: Software | Install DuckStation flatpak
+  community.general.flatpak:
+    name:
+      - org.duckstation.DuckStation
+    state: present

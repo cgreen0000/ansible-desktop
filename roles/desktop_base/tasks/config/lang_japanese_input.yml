@@ -1,0 +1,40 @@
+- name: Language | Japanese | Input | Install the ibus package
+  ansible.builtin.package:
+    name: ibus
+    state: present
+    
+- name: Language | Japanese | Input | Set GTK_IM_MODULE env variable to ibus
+  ansible.builtin.lineinfile:
+    path: /etc/environment
+    state: present
+    regex: '^GTK_IM_MODULE'
+    line: GTK_IM_MODULE=ibus
+    
+- name: Language | Japanese | Input | Set QT_IM_MODULE env variable to ibus
+  ansible.builtin.lineinfile:
+    path: /etc/environment
+    state: present
+    regex: '^QT_IM_MODULE'
+    line: QT_IM_MODULE=ibus
+
+- name: Language | Japanese | Input | Set XMODIFIERS env variable to ibus
+  ansible.builtin.lineinfile:
+    path: /etc/environment
+    state: present
+    regex: '^XMODIFIERS'
+    line: XMODIFIERS=@im=ibus
+    
+- name: Language | Japanese | Input | Install the ibus-anthy package for Japanese input
+  ansible.builtin.package:
+    name: ibus-anthy
+    state: present
+
+- name: Language | Japanese | Input | Enable Japanese (Anthy) input
+  become_user: "{{ user.name }}"
+  community.general.dconf:
+    key: /org/gnome/desktop/input-sources/sources
+    value: "[('xkb', 'us'), ('ibus', 'anthy')]"
+    state: present
+  loop: "{{ users }}"
+  loop_control:
+    loop_var: user

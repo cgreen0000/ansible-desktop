@@ -1,0 +1,6 @@
+- name: Software | Install Chromium flatpak
+  community.general.flatpak:
+    name:
+      - org.chromium.Chromium
+    state: present
+  when: chromium_flatpak is defined and chromium_flatpak == true

@@ -1,0 +1,17 @@
+# desktop_gaming | emulators
+- include_tasks: emulators/duckstation_flatpak.yml
+  when: duckstation_flatpak is defined and duckstation_flatpak == true
+- include_tasks: emulators/pcsx2_flatpak.yml
+  when: pcsx2_flatpak is defined and pcsx2_flatpak == true
+- include_tasks: emulators/retroarch_flatpak.yml
+
+# desktop_gaming | misc
+- include_tasks: misc/lutris.yml
+- include_tasks: misc/protonupqt_flatpak.yml
+- include_tasks: misc/steamrommanager_appimage.yml
+  when: steamrommanager_appimage is defined and steamrommanager_appimage == true
+
+# desktop_gaming | storefronts
+- include_tasks: storefronts/heroicgameslauncher_flatpak.yml
+- include_tasks: storefronts/minigalaxy_flatpak.yml
+- include_tasks: storefronts/steam.yml

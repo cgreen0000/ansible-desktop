@@ -1,0 +1,8 @@
+- name: System Setup | gnome extensions | enable extensions
+  become_user: "{{ item.name }}"
+  community.general.dconf:
+    key: /org/gnome/shell/enabled-extensions
+    value: "{{ item.gnome_extensions | string }}"
+    state: present
+  with_items: "{{ users }}"
+  when: de_gnome_extensions is defined and de_gnome_extensions == true

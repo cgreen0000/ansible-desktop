@@ -1,0 +1,6 @@
+- name: Software | Install ProtonUp-Qt flatpak
+  community.general.flatpak:
+    name:
+      - net.davidotek.pupgui2
+    state: present
+  when: protonupqt_flatpak is defined and protonupqt_flatpak == true

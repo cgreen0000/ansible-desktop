@@ -1,0 +1,36 @@
+- name: Software | Install Steam and prerequisites
+  block:
+  - name: Software | Steam | Enable multilib repository on Arch Linux OS family.
+    ansible.builtin.blockinfile:
+      path: /etc/pacman.conf
+      block: |
+        [multilib]
+        Include = /etc/pacman.d/mirrorlist
+      marker: "# {mark} ANSIBLE MANAGED BLOCK - pacman mirrorlist repo"
+      backup: yes
+    when: ansible_os_family == "Archlinux"
+
+  - name: Software | Steam | Generate en_US.UTF-8 locale
+    ansible.builtin.lineinfile:
+      path: /etc/locale.gen
+      search_string: '#en_US.UTF-8 UTF-8'
+      line: en_US.UTF-8 UTF-8
+    when: ansible_os_family == "Archlinux"
+    notify: Generate locale
+
+  - name: Software | Steam | Install Microsoft-compatible fonts
+    community.general.pacman:
+      name:
+        - lib32-fontconfig
+        - ttf-liberation
+        - wqy-zenhei
+      state: present
+    when: ansible_os_family == "Archlinux"
+  
+  - name: Software | Steam | Install steam package
+    ansible.builtin.package:
+      name:
+        - steam
+      state: present
+
+  when: steam is defined and steam == true

@@ -1,0 +1,12 @@
+- name: Software | gnome | gnome extensions
+  ansible.builtin.package:
+    name: gnome-shell-extensions
+    state: present
+  when: ansible_os_family == "Debian" or
+        ansible_os_family == "ArchLinux"
+
+- name: Software | gnome | gnome extensions | Install on Fedora
+  ansible.builtin.package:
+    name: gnome-extensions-app
+    state: present
+  when: ansible_distribution == "Fedora"

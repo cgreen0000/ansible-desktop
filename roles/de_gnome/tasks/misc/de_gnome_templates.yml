@@ -1,0 +1,27 @@
+- name: System Setup | gnome | Create .templates directory
+  become_user: "{{ user.name }}"
+  ansible.builtin.file:
+    path: /home/{{ user.name }}/.templates
+    state: directory
+  loop: "{{ users }}"
+  loop_control:
+    loop_var: user
+      
+- name: System Setup | gnome | Copy Text File Template
+  become_user: "{{ user.name }}"
+  ansible.builtin.copy:
+    src: de_gnome_templates/Text File
+    dest: /home/{{ user.name }}/Templates/Text File
+  loop: "{{ users }}"
+  loop_control:
+    loop_var: user
+      
+- name: System Setup | gnome | Copy LibreOffice Document Template
+  become_user: "{{ user.name }}"
+  ansible.builtin.copy:
+    src: de_gnome_templates/LibreOffice Document.odt
+    dest: /home/{{ user.name }}/Templates/LibreOffice Document.odt
+  loop: "{{ users }}"
+  loop_control:
+    loop_var: user
+    

@@ -1,0 +1,5 @@
+- name: Software | Install vscode flatpak
+  community.general.flatpak:
+    name:
+      - com.visualstudio.code
+    state: present
